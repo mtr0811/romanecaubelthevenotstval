@@ -50,18 +50,25 @@
     h1{margin:0; font-size:44px; letter-spacing:-.02em}
     .sub{margin:12px 0 0; color:var(--muted); font-size:16px; line-height:1.6; max-width:62ch}
     .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
-    button{
+
+    /* boutons */
+    button, .link-btn{
       border-radius:999px; padding:12px 16px; font-weight:600; cursor:pointer;
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.05);
       color:var(--text);
       transition:.2s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
-    button.primary{
+    .primary{
       border-color:rgba(255,77,109,.45);
       background:rgba(255,77,109,.18);
     }
-    button:hover{transform:translateY(-1px)}
+    button:hover, .link-btn:hover{transform:translateY(-1px)}
+
     .grid{
       display:grid; gap:14px; margin-top:18px;
       grid-template-columns: repeat(12, 1fr);
@@ -79,46 +86,25 @@
     .span4{grid-column: span 4}
     .span8{grid-column: span 8}
     .span12{grid-column: span 12}
+
     .gallery{
       display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin-top:10px;
     }
+    /* style des IMAGES */
     .ph{
-      height:120px; border-radius:14px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02)),
-        radial-gradient(200px 80px at 30% 20%, rgba(255,77,109,.25), transparent 60%);
+      width:100%;
+      height:120px;
+      object-fit:cover;
+      border-radius:14px;
       border:1px solid rgba(255,255,255,.10);
-      display:grid; place-items:center; color:rgba(255,255,255,.55); font-size:12px;
+      display:block;
     }
-    .modal{
-      position:fixed; inset:0; display:none; place-items:center;
-      background:rgba(0,0,0,.55);
-      padding:20px;
-    }
-    .modal.show{display:grid}
-    .modal .box{
-      width:min(720px,92vw);
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(15,16,20,.86);
-      border-radius:22px;
-      padding:22px;
-    }
-    .box h2{margin:0 0 8px; font-size:22px}
-    .box p{margin:0; color:var(--muted); line-height:1.7}
-    .close{margin-top:14px}
+
     @media (max-width:860px){
       .span6,.span4,.span8{grid-column: span 12}
       h1{font-size:38px}
       .gallery{grid-template-columns: repeat(2,1fr)}
     }
-    .ph{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.10);
-}
-
   </style>
 </head>
 <body>
@@ -134,11 +120,10 @@
         J’ai codé ça pour te dire merci, merci d'être toi, de me rendre heureux, de me surpasser et de me rendre dingue de toi.
       </p>
       <div class="cta">
-        <a class="primary link-btn" href="https://www.cipassoitalia.it/en/menu/" target="_blank">
-  Ouvrir la surprise
-</a>
-
-        <button id="scroll">🌹</button>
+        <a class="link-btn primary" href="https://www.cipassoitalia.it/en/menu/" target="_blank" rel="noopener">
+          Ouvrir la surprise
+        </a>
+        <button id="scroll" type="button">🌹</button>
       </div>
     </section>
 
@@ -161,14 +146,16 @@
       <div class="card span8">
         <h3>Galerie</h3>
         <p style="color:var(--muted); margin-bottom:10px">Bouquet virtuel.</p>
-        <div class="gallery">
-  <img class="ph" src="IMG_1905.JPG">
-  <img class="ph" src="IMG_2463.JPG">
-  <img class="ph" src="IMG_2739.JPG">
-  <img class="ph" src="IMG_2740.JPG">
-  <img class="ph" src="IMG_2741.JPG">
-</div>
-      </div>
+
+        <!-- ✅ cible du scroll -->
+        <div class="gallery" id="gallery">
+          <!-- ⚠️ 1ère image : d’après ton repo c’est "IMG_1905 2.JPG" -->
+         <img class="ph" src="IMG_1905.JPG" alt="Photo 1">
+          <img class="ph" src="IMG_2463.JPG" alt="Photo 2">
+          <img class="ph" src="IMG_2739.JPG" alt="Photo 3">
+          <img class="ph" src="IMG_2740.JPG" alt="Photo 4">
+          <img class="ph" src="IMG_2741.JPG" alt="Photo 5">
+        </div>
       </div>
 
       <div class="card span12">
@@ -178,16 +165,7 @@
     </section>
   </div>
 
-  <div class="modal" id="modal">
-    <div class="box">
-      <h2 id="mTitle">Surprise</h2>
-      <p id="mText">J’ai un cadeau pour toi. Et si tu lis ça, c’est que tu es déjà mon endroit préféré.</p>
-      <button class="close" id="close">Fermer</button>
-    </div>
-  </div>
-
   <script>
-    // Personnalisation rapide
     const PRENOM = "Romane";
     const TON_NOM = "Thevenot";
     const DATE_DEPUIS = "29/09/2024";
@@ -195,12 +173,10 @@
     document.getElementById("couple").textContent = `${TON_NOM} × ${PRENOM}`;
     document.getElementById("since").textContent = `Depuis ${DATE_DEPUIS}`;
 
-    document.getElementById("surprise").onclick = () => document.getElementById("modal").classList.add("show");
-    document.getElementById("close").onclick = () => document.getElementById("modal").classList.remove("show");
-    document.getElementById("modal").onclick = (e) => { if(e.target.id==="modal") e.target.classList.remove("show"); };
-
-    document.getElementById("scroll").onclick = () => document.getElementById("moments").scrollIntoView({behavior:"smooth"});
+    // 🌹 scroll vers la galerie
+    document.getElementById("scroll").onclick = () => {
+      document.getElementById("gallery").scrollIntoView({behavior:"smooth", block:"start"});
+    };
   </script>
 </body>
 </html>
-
