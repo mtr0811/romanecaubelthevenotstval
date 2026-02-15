@@ -149,13 +149,19 @@
         <!-- ✅ cible du scroll -->
         <div class="gallery" id="gallery">
           <!-- ⚠️ 1ère image : d’après ton repo c’est "IMG_1905 2.JPG" -->
-          <img class="ph" src="IMG_1905.JPG" alt="Photo 1">
-          <img class="ph" src="IMG_2463.JPG" alt="Photo 2">
-          <img class="ph" src="IMG_2739.JPG" alt="Photo 3">
-          <img class="ph" src="IMG_2740.JPG" alt="Photo 4">
-          <img class="ph" src="IMG_2741.JPG" alt="Photo 5">
-        </div>
-      </div>
+         <div class="card span8" id="galerie">
+  <h3>Galerie</h3>
+  <p style="color:var(--muted); margin-bottom:10px">Bouquet virtuel.</p>
+
+  <div class="gallery">
+    <img class="ph" src="./IMG_1905-2.JPG" alt="Photo 1">
+    <img class="ph" src="./IMG_2463.JPG" alt="Photo 2">
+    <img class="ph" src="./IMG_2739.JPG" alt="Photo 3">
+    <img class="ph" src="./IMG_2740.JPG" alt="Photo 4">
+    <img class="ph" src="./IMG_2741.JPG" alt="Photo 5">
+  </div>
+</div>
+
 
       <div class="card span12">
         <h3>Rendez-vous</h3>
@@ -169,7 +175,7 @@
     const TON_NOM = "Romane";
     const DATE_DEPUIS = "29/09/2024";
 
-    document.getElementById("couple").textContent = `${TON_NOM} × ${PRENOM}`;
+    document.getElementById("couple").textContent = `${TON_NOM} ${PRENOM}`;
     document.getElementById("since").textContent = `Depuis ${DATE_DEPUIS}`;
 
     // 🌹 scroll vers la galerie
